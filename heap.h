@@ -3,13 +3,75 @@
 
 class MinHeap {
 public:
-    MinHeap(int capacity);
-    ~MinHeap();
-    void insert(int vertex, int key);
-    int extractMin();
-    void decreaseKey(int vertex, int newKey);
-    bool isInMinHeap(int vertex);
-    bool isEmpty();
+    MinHeap(int capcity) {
+        heapArray = new int[capacity];
+        keyArray = new int[capacity];
+        position = new int[capacity];
+        capacity = capcity;
+
+        size = capcity;
+        for (int i = 0; i<capacity;i++) {
+            heapArray[i] = i;
+            keyArray[i] = 2147483647;
+            position[i] = i;
+        }
+        keyArray[0] = 0;
+
+    };
+    //~MinHeap();
+    void insert(int vertex, int key) {
+
+    };
+
+    int extractMin() {
+        int tempArraySize = size-1;
+        int toReturn = heapArray[0];
+        int* tempArray = new int[tempArraySize];
+        for (int i = 1;i<size;i++) {
+            tempArray[i-1] = heapArray[i];
+        }
+
+        heapArray = tempArray;
+        size--;
+        for(int i = 0; i< capacity;i++){
+            if(position[i] != 0){
+                position[i] = position[i]-1;
+
+            }
+
+        }
+        return toReturn;
+    };
+
+
+    void decreaseKey(int vertex, int newKey) {
+        int oldVal = keyArray[vertex];
+        if (oldVal>newKey) {
+            keyArray[vertex] = newKey;
+        }
+        minHeapify(vertex);
+    };
+
+
+    bool isInMinHeap(int vertex) {
+        for (int i = 0; i < size; i++) {
+            if (heapArray[i] == vertex) {
+                return true;
+            }
+            return false;
+        }
+    };
+    bool isEmpty() {
+        if (size == 0) {
+            for (int i = 0; i< capacity; i++) {
+                printf("%d\n",keyArray[i]);
+            }
+
+            return true;
+        }
+        return false;
+
+    };
 
 private:
     int* heapArray;        // Heap of vertex indices
@@ -18,7 +80,102 @@ private:
     int capacity;
     int size;
 
-    void minHeapify(int idx);
+    void minHeapify(int idx) {
+        int indexInTheHeapArray = 0;
+        for(int i = 0; i< size;i++){
+            if(heapArray[i] == idx){
+                indexInTheHeapArray = i;
+            }
+        }
+        bool heapArrayUnOrdered = true;
+        while(heapArrayUnOrdered){
+            int indexOfChild1 = 2*(indexInTheHeapArray)+1;
+            int indexOfChild2 = 2*(indexInTheHeapArray)+2;
+            int indexOfParent = (indexInTheHeapArray-1)/2;
+
+            if(!(indexOfChild1>=size)) {
+                if (keyArray[heapArray[indexInTheHeapArray]]>keyArray[heapArray[indexOfChild1]]){
+                    int temp1 = heapArray[indexInTheHeapArray];
+                    int temp2 = heapArray[indexOfChild1];
+
+                    heapArray[indexOfChild1] = temp1;
+                    heapArray[indexInTheHeapArray] = temp2;
+
+
+                    int postemp1 = position[temp1];
+                    int postemp2 = position[temp2];
+
+                    position[temp1] = postemp2;
+                    position[temp2] = postemp1;
+
+                    indexInTheHeapArray = indexOfChild1;
+                    continue;
+
+
+
+                }
+            }
+
+            if(!(indexOfChild2>=size)) {
+                if (keyArray[heapArray[indexInTheHeapArray]]>keyArray[heapArray[indexOfChild2]]){
+                    int temp1 = heapArray[indexInTheHeapArray];
+                    int temp2 = heapArray[indexOfChild2];
+
+                    heapArray[indexOfChild1] = temp1;
+                    heapArray[indexInTheHeapArray] = temp2;
+
+
+                    int postemp1 = position[temp1];
+                    int postemp2 = position[temp2];
+
+                    position[temp1] = postemp2;
+                    position[temp2] = postemp1;
+
+                    indexInTheHeapArray = indexOfChild2;
+
+                    continue;
+                }
+            }
+
+            if (size>0) {
+                if(keyArray[heapArray[indexInTheHeapArray]]<keyArray[heapArray[indexOfParent]]){
+                    int temp1 = heapArray[indexInTheHeapArray];
+                    int temp2 = heapArray[indexOfParent];
+
+                    heapArray[indexOfParent] = temp1;
+                    heapArray[indexInTheHeapArray] = temp2;
+
+
+                    int postemp1 = position[temp1];
+                    int postemp2 = position[temp2];
+
+                    position[temp1] = postemp2;
+                    position[temp2] = postemp1;
+
+                    indexInTheHeapArray = indexOfParent;
+                    continue;
+
+                }
+            }
+
+
+            heapArrayUnOrdered = false;
+
+
+
+
+
+
+
+
+
+
+
+        }
+
+
+
+    };
 };
 
 #endif
