@@ -33,15 +33,56 @@ public:
     };
     void primMST() {
         MinHeap min_heap = MinHeap(numVertices);
+        int* extractedMins = new int[numVertices];
+        int len=0;
+
         while (!min_heap.isEmpty()) {
             int extractedMin = min_heap.extractMin();
-            printf("%da\n",extractedMin);
+            extractedMins[len++] = extractedMin;
             for (int i = 0;i<numVertices;i++) {
                 if (adjMatrix[i][extractedMin]<2147483647 && adjMatrix[i][extractedMin]!=0) {
-                    min_heap.decreaseKey(i,adjMatrix[i][extractedMin]);
+                    min_heap.decreaseKey(i,adjMatrix[i][extractedMin],extractedMin);
                 }
 
             }
+        }
+        //src
+        int* keys = min_heap.getKeyArray();
+        int* src = min_heap.getheapArraySource();
+
+
+
+        int** paths = new int*[numVertices];
+        for (int i = 0; i < numVertices; i++) {
+            paths[i] = new int[2];
+            if (i == 0){
+                paths[i][0] = 0;
+                paths[i][1] = 0;
+                paths[i][2] = 0;
+            }
+            else {
+                paths[i][0] = src[i];
+                paths[i][1] = i;
+                paths[i][2] = keys[i];
+            }
+        }
+
+        int** orderedPaths = new int*[numVertices];
+        for (int i = 0; i < numVertices; i++) {
+            int extractedNum = extractedMins[i];
+            int index=0;
+            while (paths[index][1]!=extractedNum) {
+                index++;
+            }
+            orderedPaths[i] = paths[index];
+
+        }
+
+
+        int sumWeightEdges = 0;
+        for (int i = 1; i< numVertices; i++) {
+            sumWeightEdges +=orderedPaths[i][2];
+            printf("%d:  %d -> %d with weight %d.\n",i,orderedPaths[i][0],orderedPaths[i][1],orderedPaths[i][2]);
         }
 
     };  // Must print MST edges and total weight

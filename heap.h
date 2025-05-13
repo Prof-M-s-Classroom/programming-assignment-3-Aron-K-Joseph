@@ -4,6 +4,7 @@
 class MinHeap {
 public:
     MinHeap(int capcity) {
+        heapArraySource = new int[capacity];
         heapArray = new int[capacity];
         keyArray = new int[capacity];
         position = new int[capacity];
@@ -19,6 +20,23 @@ public:
 
     };
     //~MinHeap();
+
+    int* getheapArraySource() {
+        int* ret= new int[capacity];
+        for (int i = 0; i<capacity;i++) {
+            ret[i] = heapArraySource[i];
+        }
+        return ret;
+
+    }
+    int* getKeyArray() {
+        int* ret= new int[capacity];
+        for (int i = 0; i<capacity;i++) {
+            ret[i] = keyArray[i];
+        }
+        return ret;
+
+    }
     void insert(int vertex, int key) {
 
     };
@@ -36,18 +54,18 @@ public:
         for(int i = 0; i< capacity;i++){
             if(position[i] != 0){
                 position[i] = position[i]-1;
-
             }
-
         }
         return toReturn;
     };
 
 
-    void decreaseKey(int vertex, int newKey) {
+    void decreaseKey(int vertex, int newKey,int src) {
         int oldVal = keyArray[vertex];
         if (oldVal>newKey) {
             keyArray[vertex] = newKey;
+            heapArraySource[vertex] = src;
+
         }
         minHeapify(vertex);
     };
@@ -63,10 +81,6 @@ public:
     };
     bool isEmpty() {
         if (size == 0) {
-            for (int i = 0; i< capacity; i++) {
-                printf("%d\n",keyArray[i]);
-            }
-
             return true;
         }
         return false;
@@ -74,6 +88,7 @@ public:
     };
 
 private:
+    int* heapArraySource;
     int* heapArray;        // Heap of vertex indices
     int* keyArray;         // Corresponding key values
     int* position;         // Maps vertex to its position in heap
@@ -161,19 +176,7 @@ private:
 
             heapArrayUnOrdered = false;
 
-
-
-
-
-
-
-
-
-
-
         }
-
-
 
     };
 };
