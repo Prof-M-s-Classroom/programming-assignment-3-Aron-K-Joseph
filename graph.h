@@ -49,6 +49,10 @@ public:
         //src
         int* keys = min_heap.getKeyArray();
         int* src = min_heap.getheapArraySource();
+        // for (int i = 0; i < numVertices; i++) {
+        //     printf("%d                                 %d\n",keys[i],src[i]);
+        // }
+
 
 
 
@@ -84,6 +88,7 @@ public:
             sumWeightEdges +=orderedPaths[i][2];
             printf("%d:  %d -> %d with weight %d.\n",i,orderedPaths[i][0],orderedPaths[i][1],orderedPaths[i][2]);
         }
+        printf("Sum of edge weight: %d",sumWeightEdges);
 
     };  // Must print MST edges and total weight
     void printMatrix() {

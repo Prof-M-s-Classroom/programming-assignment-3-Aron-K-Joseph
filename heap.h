@@ -4,11 +4,14 @@
 class MinHeap {
 public:
     MinHeap(int capcity) {
+        capacity = capcity;
         heapArraySource = new int[capacity];
         heapArray = new int[capacity];
         keyArray = new int[capacity];
         position = new int[capacity];
-        capacity = capcity;
+        visited = new int[capacity];
+
+        visitedSize = 0;
 
         size = capcity;
         for (int i = 0; i<capacity;i++) {
@@ -56,16 +59,17 @@ public:
                 position[i] = position[i]-1;
             }
         }
+        visited[visitedSize++] = toReturn;
         return toReturn;
     };
 
 
     void decreaseKey(int vertex, int newKey,int src) {
         int oldVal = keyArray[vertex];
-        if (oldVal>newKey) {
+        if (oldVal>newKey && !(isInVisited(vertex))) {
             keyArray[vertex] = newKey;
             heapArraySource[vertex] = src;
-
+            //printf("Vertex:%d   NewKey:%d    Source:%d\n",vertex,newKey,src);
         }
         minHeapify(vertex);
     };
@@ -76,8 +80,18 @@ public:
             if (heapArray[i] == vertex) {
                 return true;
             }
-            return false;
+
         }
+        return false;
+    };
+    bool isInVisited(int vertex) {
+        for (int i = 0; i < capacity; i++) {
+            if (visited[i] == vertex) {
+                return true;
+            }
+
+        }
+        return false;
     };
     bool isEmpty() {
         if (size == 0) {
@@ -92,8 +106,10 @@ private:
     int* heapArray;        // Heap of vertex indices
     int* keyArray;         // Corresponding key values
     int* position;         // Maps vertex to its position in heap
+    int* visited;
     int capacity;
     int size;
+    int visitedSize;
 
     void minHeapify(int idx) {
         int indexInTheHeapArray = 0;
