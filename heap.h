@@ -22,7 +22,14 @@ public:
         keyArray[0] = 0;
 
     };
-    //~MinHeap();
+    ~MinHeap() {
+        delete heapArraySource;
+        delete heapArray;
+        delete position;
+        delete visited;
+        delete keyArray;
+
+    };
 
     int* getheapArraySource() {
         int* ret= new int[capacity];

@@ -26,7 +26,12 @@ public:
             }
         }
     };
-    //~Graph();
+    ~Graph() {
+        for (int i = 0; i<numVertices;i++) {
+            delete adjMatrix[i];
+        }
+        delete adjMatrix;
+    };
     void addEdge(int u, int v, int weight) {
         adjMatrix[u][v] = weight;
         adjMatrix[v][u] = weight;
