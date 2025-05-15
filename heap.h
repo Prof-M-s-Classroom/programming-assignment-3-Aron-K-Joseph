@@ -131,75 +131,125 @@ private:
             int indexOfChild2 = 2*(indexInTheHeapArray)+2;
             int indexOfParent = (indexInTheHeapArray-1)/2;
 
-            if(!(indexOfChild1>=size)) {
-                if (keyArray[heapArray[indexInTheHeapArray]]>keyArray[heapArray[indexOfChild1]]){
-                    int temp1 = heapArray[indexInTheHeapArray];
-                    int temp2 = heapArray[indexOfChild1];
+            int minBetweenChild1AndChild2;
+            if (indexOfChild1 >= size && indexOfChild2 >= size) {
 
-                    heapArray[indexOfChild1] = temp1;
-                    heapArray[indexInTheHeapArray] = temp2;
-
-
-                    int postemp1 = position[temp1];
-                    int postemp2 = position[temp2];
-
-                    position[temp1] = postemp2;
-                    position[temp2] = postemp1;
-
-                    indexInTheHeapArray = indexOfChild1;
-                    continue;
-
-
-
-                }
             }
-
-            if(!(indexOfChild2>=size)) {
-                if (keyArray[heapArray[indexInTheHeapArray]]>keyArray[heapArray[indexOfChild2]]){
-                    int temp1 = heapArray[indexInTheHeapArray];
-                    int temp2 = heapArray[indexOfChild2];
-
-                    heapArray[indexOfChild1] = temp1;
-                    heapArray[indexInTheHeapArray] = temp2;
-
-
-                    int postemp1 = position[temp1];
-                    int postemp2 = position[temp2];
-
-                    position[temp1] = postemp2;
-                    position[temp2] = postemp1;
-
-                    indexInTheHeapArray = indexOfChild2;
-
-                    continue;
+            else {
+                if (indexOfChild1 >= size) {
+                    minBetweenChild1AndChild2 = indexOfChild2;
                 }
-            }
+                else if (indexOfChild2 >= size) {
+                    minBetweenChild1AndChild2 = indexOfChild1;
+                }
+                else if (indexOfChild1 > indexOfChild2) {
+                    minBetweenChild1AndChild2 = indexOfChild2;
+                }
+                else {
+                    minBetweenChild1AndChild2 = indexOfChild1;
+                }
+                if(!(minBetweenChild1AndChild2>=size)  && keyArray[heapArray[minBetweenChild1AndChild2]]) {
+                    if (keyArray[heapArray[indexInTheHeapArray]]>keyArray[heapArray[minBetweenChild1AndChild2]]){
+                        int temp1 = heapArray[indexInTheHeapArray];
+                        int temp2 = heapArray[minBetweenChild1AndChild2];
 
-            if (size>0) {
-                if(keyArray[heapArray[indexInTheHeapArray]]<keyArray[heapArray[indexOfParent]]){
-                    int temp1 = heapArray[indexInTheHeapArray];
-                    int temp2 = heapArray[indexOfParent];
-
-                    heapArray[indexOfParent] = temp1;
-                    heapArray[indexInTheHeapArray] = temp2;
+                        heapArray[minBetweenChild1AndChild2] = temp1;
+                        heapArray[indexInTheHeapArray] = temp2;
 
 
-                    int postemp1 = position[temp1];
-                    int postemp2 = position[temp2];
+                        int postemp1 = position[temp1];
+                        int postemp2 = position[temp2];
 
-                    position[temp1] = postemp2;
-                    position[temp2] = postemp1;
+                        position[temp1] = postemp2;
+                        position[temp2] = postemp1;
 
-                    indexInTheHeapArray = indexOfParent;
-                    continue;
+                        indexInTheHeapArray = minBetweenChild1AndChild2;
+                        continue;
+
+
+
+                    }
 
                 }
             }
 
 
-            heapArrayUnOrdered = false;
 
-        }
+
+
+
+
+                // if(!(indexOfChild1>=size)  && keyArray[heapArray[indexOfChild1]]) {
+                //     if (keyArray[heapArray[indexInTheHeapArray]]>keyArray[heapArray[indexOfChild1]]){
+                //         int temp1 = heapArray[indexInTheHeapArray];
+                //         int temp2 = heapArray[indexOfChild1];
+                //
+                //         heapArray[indexOfChild1] = temp1;
+                //         heapArray[indexInTheHeapArray] = temp2;
+                //
+                //
+                //         int postemp1 = position[temp1];
+                //         int postemp2 = position[temp2];
+                //
+                //         position[temp1] = postemp2;
+                //         position[temp2] = postemp1;
+                //
+                //         indexInTheHeapArray = indexOfChild1;
+                //         continue;
+                //
+                //
+                //
+                //     }
+                // }
+                //
+                // if(!(indexOfChild2>=size)) {
+                //     if (keyArray[heapArray[indexInTheHeapArray]]>keyArray[heapArray[indexOfChild2]]){
+                //         int temp1 = heapArray[indexInTheHeapArray];
+                //         int temp2 = heapArray[indexOfChild2];
+                //
+                //         heapArray[indexOfChild1] = temp1;
+                //         heapArray[indexInTheHeapArray] = temp2;
+                //
+                //
+                //         int postemp1 = position[temp1];
+                //         int postemp2 = position[temp2];
+                //
+                //         position[temp1] = postemp2;
+                //         position[temp2] = postemp1;
+                //
+                //         indexInTheHeapArray = indexOfChild2;
+                //
+                //         continue;
+                //     }
+                // }
+
+                if (size>0) {
+                    if(keyArray[heapArray[indexInTheHeapArray]]<keyArray[heapArray[indexOfParent]]){
+                        int temp1 = heapArray[indexInTheHeapArray];
+                        int temp2 = heapArray[indexOfParent];
+
+                        heapArray[indexOfParent] = temp1;
+                        heapArray[indexInTheHeapArray] = temp2;
+
+
+                        int postemp1 = position[temp1];
+                        int postemp2 = position[temp2];
+
+                        position[temp1] = postemp2;
+                        position[temp2] = postemp1;
+
+                        indexInTheHeapArray = indexOfParent;
+                        continue;
+
+                    }
+                }
+
+
+                heapArrayUnOrdered = false;
+
+
+
+        };
 
     };
 };
